@@ -6,13 +6,15 @@ def num_words(text):
 def count_characters(text):
     result = {}
     lower_text = text.lower()
+    total_c = 0
     for c in lower_text:
         if not c.isalpha():
             continue
         if (not c in result):
             result[c] = 0
         result[c] += 1
-    return result
+        total_c += 1
+    return result, total_c
 
 def sort_on(items):
     return items["num"]

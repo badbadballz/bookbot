@@ -21,11 +21,19 @@ def get_path():
 def main():
 
     dir = get_path()
-    text = get_book_text(dir)
-
-    n = num_words(text)
+    try:
+        text = get_book_text(dir)
+    except FileNotFoundError:
+        print("Error: File not found")
+        sys.exit(1)
+    except Exception as e:
+        print(f"Error: {e}")
+        sys.exit(2)
     
-    count = sort_char(count_characters(text))
+    n = num_words(text)
+    c_dict, nc = count_characters(text)
+
+    count = sort_char(c_dict)
     
     #print(count)
     print("============ BOOKBOT ============")
@@ -34,7 +42,9 @@ def main():
     print(f"Found {n} total words")
     print("--------- Character Count -------")
     for i in count:
-        print(f"{i["character"]}: {i["num"]}")
+        p = (i["num"]/nc)*100
+        print(f"{i["character"]}: {i["num"]}: {round(p,2)}%" )
+    print(f"*: {nc}: 100%")
     print("============= END ===============")
 
 main()
